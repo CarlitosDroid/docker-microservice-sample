@@ -1,0 +1,24 @@
+version: "3"
+services:
+
+  nodejsservice:
+    build: ./nodejs-service
+    ports:
+      - "3000:3000"
+    command: nodemon /home/node
+    volumes:
+      - ./nodejs-service:/home/node
+    networks: 
+      - ws-chain
+    depends_on:
+      - dbservice
+    environment: 
+      - DATABASE_HOST=dbservice  
+
+  dbservice:
+    build: ./mysql-service
+    networks: 
+      - ws-chain
+          
+networks:
+  ws-chain:
